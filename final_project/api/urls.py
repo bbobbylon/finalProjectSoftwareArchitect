@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import main
+from .views import RoomView
 
 urlpatterns = [
-    path('home', main),
-    path('', main),
+    #this is now an API endpoint
+    path('room', RoomView.as_view()),
+
 ]
