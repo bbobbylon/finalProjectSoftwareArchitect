@@ -16,7 +16,7 @@ export default class CreateRoomPage extends Component{
     constructor(props){
         super(props);
         this.state = {
-            guestCanPause: true,
+            guestCanPauseMusic: true,
             voteToSkip: this.defaultVotes,
         };
 
@@ -36,7 +36,7 @@ export default class CreateRoomPage extends Component{
 
     handleGuestsCanPauseChange(e){
         this.setState({
-            guestCanPause: e.target.value == "true" ? true: false,
+            guestCanPauseMusic: e.target.value == "true" ? true: false,
         });
     }
 
@@ -47,7 +47,7 @@ export default class CreateRoomPage extends Component{
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
                 vote_to_skip: this.state.voteToSkip,
-                guest_can_pause_music: this.state.guestCanPause,
+                guest_can_pause_music: this.state.guestCanPauseMusic,
             }),
         };
         fetch("/api/create-a-room", requestOptions)
