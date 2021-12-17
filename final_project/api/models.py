@@ -17,10 +17,10 @@ def generate_unique_join_code():
 #room model
 class Room(models.Model):
     #unique code that stores characters
-    code = models.CharField(max_length=8, default="", unique=True)
+    code = models.CharField(max_length=8, default=generate_unique_join_code, unique=True)
     #stores information that links back to host
     host = models.CharField(max_length=50, unique=True)
-    guest_can_pause_music = models.BooleanField(null=False, default=False)
+    guest_can_pause_music = models.BooleanField(null=False, default=True)
     vote_to_skip = models.IntegerField(null=False, default=1)
     created_at = models.DateField(auto_now_add=True)
 
