@@ -12,7 +12,6 @@ export default class HomePage extends Component{
         this.state ={
             roomCode: null,
         };
-        this.clearRoomCode = this.clearRoomCode.bind(this);
     }
 
     //life cycle method to check and see if parameters are met once screen is loaded, before screen is rendered
