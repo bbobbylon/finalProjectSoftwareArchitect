@@ -58,7 +58,7 @@ export default class RoomJoinPage extends Component{
             }),
           };
           console.log(this.state.requestOptions);
-          fetch("/api/join-room/", requestOptions)
+          fetch("/api/join-room", requestOptions)
             .then((response) => {
               if (response.ok) {
                 this.props.history.push(`/room/${this.state.roomCode}`);

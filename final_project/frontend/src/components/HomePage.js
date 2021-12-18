@@ -12,17 +12,19 @@ export default class HomePage extends Component{
         this.state ={
             roomCode: null,
         };
+        this.clearRoomCode = this.clearRoomCode.bind(this);
     }
 
     //life cycle method to check and see if parameters are met once screen is loaded, before screen is rendered
-    async componentDidMount(){
-        fetch('/api/user-is-in-room').then((response) => response.json()).then((data) =>{
-            //forces component to re-render
+    async componentDidMount() {
+        fetch("/api/user-in-room")
+          .then((response) => response.json())
+          .then((data) => {
             this.setState({
-                roomCode: data.code,
+              roomCode: data.code,
             });
-        });
-    }
+          });
+      }
 
     renderHomePage(){
         return(
@@ -45,6 +47,12 @@ export default class HomePage extends Component{
         );
     }
 
+    clearRoomCode(){
+        this.setState = ({
+            roomCode: null,
+        });
+    }
+
     render(){
         return (
             <BrowserRouter>
@@ -57,7 +65,12 @@ export default class HomePage extends Component{
                 />
                     <Route path='/join' component ={RoomJoinPage}/>
                     <Route path='/create' component ={CreateRoomPage}/>
-                    <Route path = '/room/:roomCode'component={Room}/>
+                    <Route
+            path="/room/:roomCode"
+            render={(props) => {
+              return <Room {...props} leaveRoomCallback={this.clearRoomCode} />;
+            }}
+          />
                 </Switch>
             </BrowserRouter>
         );
