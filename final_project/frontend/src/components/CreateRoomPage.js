@@ -12,12 +12,19 @@ import FormControlLabel  from '@material-ui/core/FormControlLabel';
 
 export default class CreateRoomPage extends Component{
     defaultVotes = 2;
+    static defaultProps = {
+        voteToSkip:2,
+        guestCanPauseMusic: true,
+        update:false,
+        roomCode:null,
+        updateCallback: () => {},
+    }
 
     constructor(props){
         super(props);
         this.state = {
-            guestCanPauseMusic: true,
-            voteToSkip: this.defaultVotes,
+            guestCanPauseMusic: this.props.guestCanPauseMusic,
+            voteToSkip: this.props.voteToSkip,
         };
 
         //you need to bind the objec to use 'this'
@@ -55,10 +62,37 @@ export default class CreateRoomPage extends Component{
         .then((data) => this.props.history.push("/room/" + data.code));
     }
 
+    
+    remderCreateButtons(){
+        return ( <Grid container spacing={1}>
+            <Grid item xs={12} align = "center">
+                <Button color = "secondary" variant='contained'onClick = {this.handleWhenRoomButtonPressed}>
+                    Create a New Room
+                </Button>
+                <Button color = "primary" variant='contained' to="/" component= {Link}>
+                    Go Back
+                </Button>
+            </Grid>
+            </Grid>
+        );
+
+    }
+
+
+    renderUpdateButtons(){
+        return (<Grid item xs={12} align = "center">
+        <Button color = "secondary" variant='contained'onClick = {this.handleWhenRoomButtonPressed}>
+            Update the Room
+        </Button>
+        </Grid>
+          );  
+    }
+
     render(){
+        const title = this.props.update ? "Update Room" : "Create a Room";
         return (<Grid container spacing = {1}>
             <Grid item xs={12} align = "center">
-                <Typography component='h4' variant = 'h4'>Create a Room :)</Typography>
+                <Typography component='h4' variant = 'h4'>{title}</Typography>
             </Grid>
             <Grid item xs={12} align = "center">
                 <FormControl component = "fieldset">
@@ -86,7 +120,7 @@ export default class CreateRoomPage extends Component{
                     required={true} 
                     type = "number" 
                     onClick={this.handleVotesThatChange}
-                    defaultValue={this.defaultVotes}
+                    defaultValue={this.state.voteToSkip}
                     inputProps= {{
                         min:1, 
                         style: {textAlign: 'center'}
@@ -107,6 +141,9 @@ export default class CreateRoomPage extends Component{
                     Go Back
                 </Button>
             </Grid>
+            {this.props.update ? 
+            this.renderUpdateButtons
+            :this.renderCreateButtons}
         </Grid>
         );
     }

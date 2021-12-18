@@ -14,11 +14,12 @@ export default class Room extends Component {
             showSettings: false,
         };
         this.roomCode = this.props.match.params.roomCode;
-        this.getRoomDetails();
+      
         this.leaveButtonIsPressed = this.leaveButtonIsPressed.bind(this);
         this.updateShowSettings = this.updateShowSettings.bind(this);
         this.renderSettingsButton = this.renderSettingsButton.bind(this);
         this.renderSettings = this.renderSettings.bind(this);
+        this.getRoomDetails();
     }
 
 
@@ -55,35 +56,34 @@ export default class Room extends Component {
             this.setState = ({
               showSettings: value,
             });
+            console.log(value);
           }
 
     renderSettings(){
-        return(<Grid container spacing={1}>
+        return (<Grid container spacing={1}>
             <Grid item xs ={12} align="center">
-                <CreateRoomPage update = {true} voteToSkip={this.state.voteToSkip} guestCanPauseMusic = {this.state.guestCanPauseMusic} roomCode = {this.roomCode} updateCallback={this.getRoomDetails} />
+                <CreateRoomPage update = {true} voteToSkip={this.state.voteToSkip} guestCanPauseMusic = {this.state.guestCanPauseMusic} roomCode = {this.roomCode} updateCallback={() => {}} />
             </Grid>
             <Grid item xs ={12} align="center">
             <Button variant = "contained" color = 'secondary' onClick={() => this.updateShowSettings(false)}>
                     Close Settings
                 </Button>
             </Grid>
-
-        </Grid>
-
-        );
+        </Grid>);
     }
     renderSettingsButton(){
         return (
             <Grid item xs={12} align = "center">
                 <Button variant = "contained" 
                 color = 'primary' 
-                onClick={this.updateShowSettings(true)}>
+                onClick={this.updateShowSettings(true)}
+                >
                     Go to Settings
                 </Button>
             </Grid>
-
         );
     }
+    
     render(){
         if(this.state.showSettings){
             return this.renderSettings();
