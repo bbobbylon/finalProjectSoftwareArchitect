@@ -5,7 +5,7 @@ To run the system:
 
 1. Clone the repository.
 2. install necessary frameworks at repository location from Powershell.
-3. Run: python3 -m venv venv in Powershell  
+3. Run: python3 -m venv venv in Powershell at repository location
 4. Run: venv\Scripts\activate in Powershell (you will see "(venv)" next to your path when this is successful
 5. Create another terminal window and cd to the repository. 
 6. Run: cd\frontend in the new terminal window
