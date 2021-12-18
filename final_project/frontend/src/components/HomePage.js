@@ -9,6 +9,19 @@ import {Grid, Button, ButtonGroup, Typography} from "@material-ui/core";
 export default class HomePage extends Component{
     constructor(props){
         super(props);
+        this.state ={
+            roomCode: null,
+        };
+    }
+
+    //life cycle method to check and see if parameters are met once screen is loaded, before screen is rendered
+    async componentDidMount(){
+        fetch('/api/user-is-in-room').then((response) => response.json()).then((data) =>{
+            //forces component to re-render
+            this.setState({
+                roomCode: data.code,
+            });
+        });
     }
 
     renderHomePage(){
@@ -21,8 +34,9 @@ export default class HomePage extends Component{
                 </Grid>
                 <Grid item xs={12} align = "center">
                     <ButtonGroup disableElevation variant ="contained" color="primary">
-                        <Button color="primary" to ="/join" component = {Link}>Click here to Join a Room</Button>
-                            
+                        <Button color="primary" to ="/join" component = {Link}>Click here to Join a Room!</Button>
+                        <Button color="secondary" to ="/create" component = {Link}>Click here to Create a Room!</Button>
+                           
                     </ButtonGroup>
 
 
@@ -35,7 +49,12 @@ export default class HomePage extends Component{
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route exact path = '/'><p>This is the home page</p></Route>
+                <Route exact path = '/' render={()=>{
+                    return this.state.roomCode ? (
+                    <Redirect to ={`/room/${this.state.roomCode}`} />
+                    ) : (this.renderHomePage() );
+                }}
+                />
                     <Route path='/join' component ={RoomJoinPage}/>
                     <Route path='/create' component ={CreateRoomPage}/>
                     <Route path = '/room/:roomCode'component={Room}/>
