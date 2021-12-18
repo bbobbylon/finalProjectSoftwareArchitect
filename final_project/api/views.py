@@ -48,8 +48,8 @@ class JoinTheRoom(APIView):
             if len(room_result) > 0:
                 room = room_result[0]
                 self.request.session['room_code'] = code
-                return Response({'message': 'You just joined the Room'}, status = status.status.HTTP_200_OK)
-            return Response({'Wrong request': 'You entered a fake Code room'}, status = status.status.HTTP_200_OK)
+                return Response({'message': 'You just joined the Room'}, status = status.HTTP_200_OK)
+            return Response({'Wrong request': 'You entered a fake Code room'}, status = status.HTTP_200_OK)
         return Response({'You made a Bad Request' : 'You made a bad post data'}, status= status.HTTP_400_BAD_REQUEST)
 
 
